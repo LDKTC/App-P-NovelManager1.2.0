@@ -22,6 +22,7 @@ function createWindow() {
     backgroundColor: '#050506',
     frame: false,
     autoHideMenuBar: true,
+    icon: path.join(__dirname, 'Image', 'DraconDex-IconApp.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -189,6 +190,11 @@ h('timeline:removeEventTag', (eid,tid) => db.removeEventTag(eid,tid));
 
 // Search
 h('search:all', (q) => db.searchAll(q));
+
+// Hashtag objects by tag
+h('hashtag:getObjectsByTag', (tagId, projectId) => db.getObjectsByHashtag(tagId, projectId));
+h('hashtag:getEventsByTag', (tagId, projectId) => db.getEventsByHashtag(tagId, projectId));
+h('project:getAllUsedTags', (pid) => db.getAllProjectUsedTags(pid));
 
 // Window controls for the custom title/tab bar.
 h('window:minimize', () => {

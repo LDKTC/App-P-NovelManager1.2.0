@@ -1,17 +1,66 @@
-const Database = require('better-sqlite3');
+const { Database: _RawDatabase } = require('node-sqlite3-wasm');
+const fs = require('fs');
 const path = require('path');
 const { app } = require('electron');
+
+// node-sqlite3-wasm API differences from better-sqlite3:
+//   - stmt.all/get/run take a single array arg, not spread params
+//   - db.transaction() does not exist
+// This shim patches the db instance to match better-sqlite3's API.
+function adaptDb(rawDb) {
+  const origPrepare = rawDb.prepare.bind(rawDb);
+  rawDb.prepare = (sql) => {
+    const stmt = origPrepare(sql);
+    return {
+      all: (...args) => stmt.all(args),
+      get: (...args) => {
+        const r = stmt.get(args);
+        return r === null ? undefined : r;
+      },
+      run: (...args) => stmt.run(args),
+    };
+  };
+  rawDb.transaction = (fn) => (...args) => {
+    rawDb.exec('BEGIN');
+    try {
+      const result = fn(...args);
+      rawDb.exec('COMMIT');
+      return result;
+    } catch (e) {
+      try { rawDb.exec('ROLLBACK'); } catch (_) {}
+      throw e;
+    }
+  };
+  return rawDb;
+}
 
 let db;
 
 function getDB() {
   if (!db) {
-    const dbPath = path.join(path.dirname(app.getPath('userData')), 'novel-manager.db');
-    db = new Database(dbPath);
-    db.pragma('journal_mode = WAL');
-    db.pragma('foreign_keys = ON');
-    // Avoid SQLITE_BUSY errors by setting a sensible busy timeout
-    try { db.pragma('busy_timeout = 5000'); } catch (e) { /* ignore if unsupported */ }
+    const dbDir = path.dirname(app.getPath('userData'));
+    if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+    const dbPath = path.join(dbDir, 'novel-manager.db');
+    // node-sqlite3-wasm's VFS cannot handle WAL files. If the DB file has WAL-mode
+    // header bytes (18-19 == 2) and no .db-wal file exists, patch the bytes to 1
+    // (DELETE/ROLLBACK mode) before opening so SQLite never triggers WAL initialization.
+    if (fs.existsSync(dbPath) && !fs.existsSync(dbPath + '-wal')) {
+      try {
+        const hdr = Buffer.alloc(2);
+        const hfd = fs.openSync(dbPath, 'r+');
+        fs.readSync(hfd, hdr, 0, 2, 18);
+        if (hdr[0] === 2 || hdr[1] === 2) {
+          hdr[0] = 1; hdr[1] = 1;
+          fs.writeSync(hfd, hdr, 0, 2, 18);
+          fs.fsyncSync(hfd);
+        }
+        fs.closeSync(hfd);
+      } catch (_) {}
+    }
+    db = adaptDb(new _RawDatabase(dbPath));
+    db.exec("PRAGMA journal_mode = DELETE");
+    db.exec("PRAGMA foreign_keys = ON");
+    try { db.exec("PRAGMA busy_timeout = 5000"); } catch (e) { /* ignore if unsupported */ }
     initDB();
   }
   return db;
@@ -645,6 +694,46 @@ const setEventTags = (eventId, tags) => {
 const addEventTag = (eventId, tagId) => getDB().prepare(`INSERT OR IGNORE INTO event_hashtag (event_id,hashtag_id) VALUES (?,?)`).run(eventId, tagId);
 const removeEventTag = (eventId, tagId) => getDB().prepare(`DELETE FROM event_hashtag WHERE event_id=? AND hashtag_id=?`).run(eventId, tagId);
 
+// ── Objects by hashtag ───────────────────────────────
+const getObjectsByHashtag = (tagId, projectId) => getDB().prepare(`
+  SELECT o.*, oc.category_name, uc.color_code
+  FROM object o
+  JOIN object_hashtag oh ON oh.object_id = o.id
+  JOIN object_category oc ON o.category_id = oc.id
+  LEFT JOIN use_color uc ON o.color = uc.id
+  WHERE oh.hashtag_id = ? AND o.project_id = ?
+  ORDER BY oc.category_name, o.name
+`).all(tagId, projectId);
+
+const getAllProjectUsedTags = (projectId) => getDB().prepare(`
+  SELECT DISTINCT h.id, h.tag_name, h.tag_color, h.update_at, uc.color_code
+  FROM hashtag h
+  LEFT JOIN use_color uc ON h.tag_color = uc.id
+  WHERE h.id IN (
+    SELECT hashtag_id FROM project_hashtag WHERE project_id = ?
+    UNION
+    SELECT oh.hashtag_id FROM object_hashtag oh
+    JOIN object o ON oh.object_id = o.id
+    WHERE o.project_id = ?
+    UNION
+    SELECT eh.hashtag_id FROM event_hashtag eh
+    JOIN timeline_event te ON eh.event_id = te.id
+    JOIN timeline tl ON te.timeline_id = tl.id
+    WHERE tl.project_id = ?
+  )
+  ORDER BY h.tag_name
+`).all(projectId, projectId, projectId);
+
+const getEventsByHashtag = (tagId, projectId) => getDB().prepare(`
+  SELECT te.id, te.event_name, tl.line_name, uc.color_code
+  FROM timeline_event te
+  JOIN event_hashtag eh ON eh.event_id = te.id
+  JOIN timeline tl ON te.timeline_id = tl.id
+  LEFT JOIN use_color uc ON te.color = uc.id
+  WHERE eh.hashtag_id = ? AND tl.project_id = ?
+  ORDER BY tl.line_name, te.event_name
+`).all(tagId, projectId);
+
 // ── Search ───────────────────────────────────────────
 const searchAll = (query) => {
   const d = getDB();
@@ -683,9 +772,7 @@ const searchAll = (query) => {
 
 const getDatabasePath = () => path.join(path.dirname(app.getPath('userData')), 'novel-manager.db');
 const exportDatabaseTo = async (targetPath) => {
-  const d = getDB();
-  d.pragma('wal_checkpoint(FULL)');
-  await d.backup(targetPath);
+  fs.copyFileSync(getDatabasePath(), targetPath);
 };
 
 const hasTable = (conn, tableName) => !!conn.prepare(
@@ -699,7 +786,7 @@ const hasColumn = (conn, tableName, columnName) => {
 
 function importDatabaseMerge(sourcePath) {
   const target = getDB();
-  const source = new Database(sourcePath, { readonly: true, fileMustExist: true });
+  const source = adaptDb(new _RawDatabase(sourcePath, { readOnly: true }));
 
   const summary = {
     colors: 0, folders: 0, projects: 0, categories: 0, templates: 0,
@@ -708,7 +795,7 @@ function importDatabaseMerge(sourcePath) {
   };
 
   const tx = target.transaction(() => {
-    target.pragma('foreign_keys = OFF');
+    target.exec("PRAGMA foreign_keys = OFF");
 
     if (hasTable(source, 'use_color')) {
       const rows = source.prepare(`SELECT color_code FROM use_color WHERE color_code IS NOT NULL`).all();
@@ -953,11 +1040,157 @@ function importDatabaseMerge(sourcePath) {
     }
 
     if (hasTable(source, 'relation_type')) {
-      const rows = source.prepare(`SELECT relation_name FROM relation_type`).all();
-      for (const r of rows) summary.relationTypes += target.prepare(`INSERT OR IGNORE INTO relation_type (relation_name) VALUES (?)`).run(r.relation_name).changes;
+      const colorById = hasTable(source, 'use_color') ? source.prepare(`SELECT id, color_code FROM use_color`).all().reduce((m, r) => (m.set(r.id, r.color_code), m), new Map()) : new Map();
+      const rows = source.prepare(`SELECT relation_name, color FROM relation_type`).all();
+      for (const r of rows) summary.relationTypes += target.prepare(`INSERT OR IGNORE INTO relation_type (relation_name, color) VALUES (?, (SELECT id FROM use_color WHERE color_code=?))`).run(r.relation_name, colorById.get(r.color) || null).changes;
     }
 
-    target.pragma('foreign_keys = ON');
+    if (hasTable(source, 'relation') && hasTable(source, 'relation_type') && hasTable(source, 'project')) {
+      const srcProjects = source.prepare(`SELECT id, codename, name FROM project`).all().reduce((m, p) => (m.set(p.id, p.codename ? `code:${p.codename}` : `name:${p.name}`), m), new Map());
+      const srcRelTypes = source.prepare(`SELECT id, relation_name FROM relation_type`).all().reduce((m, r) => (m.set(r.id, r.relation_name), m), new Map());
+      const colorById = hasTable(source, 'use_color') ? source.prepare(`SELECT id, color_code FROM use_color`).all().reduce((m, r) => (m.set(r.id, r.color_code), m), new Map()) : new Map();
+
+      if (hasTable(source, 'relation_obob') && hasTable(source, 'object') && hasTable(source, 'object_category')) {
+        const srcCats = source.prepare(`SELECT id, category_name, project_id FROM object_category`).all().reduce((m, c) => (m.set(c.id, { cat: c.category_name, pKey: srcProjects.get(c.project_id) }), m), new Map());
+        const srcObjs = source.prepare(`SELECT id, name, project_id, category_id FROM object`).all().reduce((m, o) => (m.set(o.id, { name: o.name, pKey: srcProjects.get(o.project_id), catName: srcCats.get(o.category_id)?.cat }), m), new Map());
+        const srcRels = source.prepare(`SELECT r.id, r.project_id, r.relation_type, r.color FROM relation r JOIN relation_obob ro ON ro.relation_id=r.id`).all();
+        const obobRows = source.prepare(`SELECT ro.id, ro.relation_id, ro.object_from, ro.object_to FROM relation_obob ro`).all();
+        const relMap = new Map(srcRels.map(r => [r.id, r]));
+        for (const row of obobRows) {
+          const rel = relMap.get(row.relation_id);
+          if (!rel) continue;
+          const pKey = srcProjects.get(rel.project_id);
+          if (!pKey) continue;
+          const p = pKey.startsWith('code:') ? target.prepare(`SELECT id FROM project WHERE codename=?`).get(pKey.slice(5)) : target.prepare(`SELECT id FROM project WHERE codename IS NULL AND name=?`).get(pKey.slice(5));
+          if (!p) continue;
+          const soFrom = srcObjs.get(row.object_from);
+          const soTo = srcObjs.get(row.object_to);
+          if (!soFrom || !soTo) continue;
+          const cFrom = target.prepare(`SELECT id FROM object_category WHERE project_id=? AND category_name=?`).get(p.id, soFrom.catName);
+          const cTo = target.prepare(`SELECT id FROM object_category WHERE project_id=? AND category_name=?`).get(p.id, soTo.catName);
+          if (!cFrom || !cTo) continue;
+          const oFrom = target.prepare(`SELECT id FROM object WHERE name=? AND project_id=? AND category_id=?`).get(soFrom.name, p.id, cFrom.id);
+          const oTo = target.prepare(`SELECT id FROM object WHERE name=? AND project_id=? AND category_id=?`).get(soTo.name, p.id, cTo.id);
+          if (!oFrom || !oTo) continue;
+          const rtName = srcRelTypes.get(rel.relation_type);
+          const rt = rtName ? target.prepare(`SELECT id FROM relation_type WHERE relation_name=?`).get(rtName) : null;
+          const exists = target.prepare(`SELECT ro.id FROM relation_obob ro JOIN relation r ON ro.relation_id=r.id WHERE r.project_id=? AND ro.object_from=? AND ro.object_to=?`).get(p.id, oFrom.id, oTo.id);
+          if (exists) continue;
+          const nr = target.prepare(`INSERT INTO relation (project_id, relation_type, color) VALUES (?,?,(SELECT id FROM use_color WHERE color_code=?))`).run(p.id, rt?.id || null, colorById.get(rel.color) || null);
+          target.prepare(`INSERT INTO relation_obob (relation_id, object_from, object_to) VALUES (?,?,?)`).run(nr.lastInsertRowid, oFrom.id, oTo.id);
+          summary.relations++;
+        }
+      }
+
+      if (hasTable(source, 'relation_obtl') && hasTable(source, 'object') && hasTable(source, 'object_category') && hasTable(source, 'timeline_event') && hasTable(source, 'timeline')) {
+        const srcCats = source.prepare(`SELECT id, category_name, project_id FROM object_category`).all().reduce((m, c) => (m.set(c.id, { cat: c.category_name, pKey: srcProjects.get(c.project_id) }), m), new Map());
+        const srcObjs = source.prepare(`SELECT id, name, project_id, category_id FROM object`).all().reduce((m, o) => (m.set(o.id, { name: o.name, pKey: srcProjects.get(o.project_id), catName: srcCats.get(o.category_id)?.cat }), m), new Map());
+        const srcTl = source.prepare(`SELECT id, line_name, project_id FROM timeline`).all().reduce((m, t) => (m.set(t.id, { line_name: t.line_name, pKey: srcProjects.get(t.project_id) }), m), new Map());
+        const srcDate = source.prepare(`SELECT id, day, month, years, COALESCE(hour,0) AS hour, COALESCE(minute,0) AS minute FROM timeline_date`).all().reduce((m, d) => (m.set(d.id, d), m), new Map());
+        const srcEvts = source.prepare(`SELECT id, timeline_id, event_name, start_at FROM timeline_event`).all().reduce((m, e) => (m.set(e.id, e), m), new Map());
+        const srcRels = source.prepare(`SELECT r.id, r.project_id, r.relation_type, r.color FROM relation r JOIN relation_obtl ro ON ro.relation_id=r.id`).all();
+        const obtlRows = source.prepare(`SELECT ro.id, ro.relation_id, ro.object_from, ro.timeline_to FROM relation_obtl ro`).all();
+        const relMap = new Map(srcRels.map(r => [r.id, r]));
+        for (const row of obtlRows) {
+          const rel = relMap.get(row.relation_id);
+          if (!rel) continue;
+          const pKey = srcProjects.get(rel.project_id);
+          if (!pKey) continue;
+          const p = pKey.startsWith('code:') ? target.prepare(`SELECT id FROM project WHERE codename=?`).get(pKey.slice(5)) : target.prepare(`SELECT id FROM project WHERE codename IS NULL AND name=?`).get(pKey.slice(5));
+          if (!p) continue;
+          const soFrom = srcObjs.get(row.object_from);
+          const seEv = srcEvts.get(row.timeline_to);
+          if (!soFrom || !seEv) continue;
+          const cFrom = target.prepare(`SELECT id FROM object_category WHERE project_id=? AND category_name=?`).get(p.id, soFrom.catName);
+          const oFrom = cFrom ? target.prepare(`SELECT id FROM object WHERE name=? AND project_id=? AND category_id=?`).get(soFrom.name, p.id, cFrom.id) : null;
+          if (!oFrom) continue;
+          const srcTlEntry = srcTl.get(seEv.timeline_id);
+          if (!srcTlEntry) continue;
+          const tl = target.prepare(`SELECT id FROM timeline WHERE project_id=? AND line_name=?`).get(p.id, srcTlEntry.line_name);
+          if (!tl) continue;
+          const sd = srcDate.get(seEv.start_at);
+          if (!sd) continue;
+          const sid = target.prepare(`SELECT id FROM timeline_date WHERE day=? AND month=? AND years=? AND hour=? AND minute=?`).get(sd.day, sd.month, sd.years, sd.hour, sd.minute);
+          if (!sid) continue;
+          const ev = target.prepare(`SELECT id FROM timeline_event WHERE timeline_id=? AND COALESCE(event_name,'')=COALESCE(?,'') AND start_at=?`).get(tl.id, seEv.event_name || null, sid.id);
+          if (!ev) continue;
+          const rtName = srcRelTypes.get(rel.relation_type);
+          const rt = rtName ? target.prepare(`SELECT id FROM relation_type WHERE relation_name=?`).get(rtName) : null;
+          const exists = target.prepare(`SELECT ro.id FROM relation_obtl ro JOIN relation r ON ro.relation_id=r.id WHERE r.project_id=? AND ro.object_from=? AND ro.timeline_to=?`).get(p.id, oFrom.id, ev.id);
+          if (exists) continue;
+          const nr = target.prepare(`INSERT INTO relation (project_id, relation_type, color) VALUES (?,?,(SELECT id FROM use_color WHERE color_code=?))`).run(p.id, rt?.id || null, colorById.get(rel.color) || null);
+          target.prepare(`INSERT INTO relation_obtl (relation_id, object_from, timeline_to) VALUES (?,?,?)`).run(nr.lastInsertRowid, oFrom.id, ev.id);
+          summary.relations++;
+        }
+      }
+
+      if (hasTable(source, 'relation_tltl') && hasTable(source, 'timeline_event') && hasTable(source, 'timeline')) {
+        const srcTl = source.prepare(`SELECT id, line_name, project_id FROM timeline`).all().reduce((m, t) => (m.set(t.id, { line_name: t.line_name, pKey: srcProjects.get(t.project_id) }), m), new Map());
+        const srcDate = source.prepare(`SELECT id, day, month, years, COALESCE(hour,0) AS hour, COALESCE(minute,0) AS minute FROM timeline_date`).all().reduce((m, d) => (m.set(d.id, d), m), new Map());
+        const srcEvts = source.prepare(`SELECT id, timeline_id, event_name, start_at FROM timeline_event`).all().reduce((m, e) => (m.set(e.id, e), m), new Map());
+        const srcRels = source.prepare(`SELECT r.id, r.project_id, r.relation_type, r.color FROM relation r JOIN relation_tltl ro ON ro.relation_id=r.id`).all();
+        const tltlRows = source.prepare(`SELECT ro.id, ro.relation_id, ro.timeline_from, ro.timeline_to FROM relation_tltl ro`).all();
+        const relMap = new Map(srcRels.map(r => [r.id, r]));
+        for (const row of tltlRows) {
+          const rel = relMap.get(row.relation_id);
+          if (!rel) continue;
+          const pKey = srcProjects.get(rel.project_id);
+          if (!pKey) continue;
+          const p = pKey.startsWith('code:') ? target.prepare(`SELECT id FROM project WHERE codename=?`).get(pKey.slice(5)) : target.prepare(`SELECT id FROM project WHERE codename IS NULL AND name=?`).get(pKey.slice(5));
+          if (!p) continue;
+          const resolveEvent = (evId) => {
+            const se = srcEvts.get(evId);
+            if (!se) return null;
+            const tl = srcTl.get(se.timeline_id);
+            if (!tl) return null;
+            const targetTl = target.prepare(`SELECT id FROM timeline WHERE project_id=? AND line_name=?`).get(p.id, tl.line_name);
+            if (!targetTl) return null;
+            const sd = srcDate.get(se.start_at);
+            if (!sd) return null;
+            const sid = target.prepare(`SELECT id FROM timeline_date WHERE day=? AND month=? AND years=? AND hour=? AND minute=?`).get(sd.day, sd.month, sd.years, sd.hour, sd.minute);
+            if (!sid) return null;
+            return target.prepare(`SELECT id FROM timeline_event WHERE timeline_id=? AND COALESCE(event_name,'')=COALESCE(?,'') AND start_at=?`).get(targetTl.id, se.event_name || null, sid.id);
+          };
+          const evFrom = resolveEvent(row.timeline_from);
+          const evTo = resolveEvent(row.timeline_to);
+          if (!evFrom || !evTo) continue;
+          const rtName = srcRelTypes.get(rel.relation_type);
+          const rt = rtName ? target.prepare(`SELECT id FROM relation_type WHERE relation_name=?`).get(rtName) : null;
+          const exists = target.prepare(`SELECT ro.id FROM relation_tltl ro JOIN relation r ON ro.relation_id=r.id WHERE r.project_id=? AND ro.timeline_from=? AND ro.timeline_to=?`).get(p.id, evFrom.id, evTo.id);
+          if (exists) continue;
+          const nr = target.prepare(`INSERT INTO relation (project_id, relation_type, color) VALUES (?,?,(SELECT id FROM use_color WHERE color_code=?))`).run(p.id, rt?.id || null, colorById.get(rel.color) || null);
+          target.prepare(`INSERT INTO relation_tltl (relation_id, timeline_from, timeline_to) VALUES (?,?,?)`).run(nr.lastInsertRowid, evFrom.id, evTo.id);
+          summary.relations++;
+        }
+      }
+    }
+
+    if (hasTable(source, 'map') && hasTable(source, 'project')) {
+      const srcProjects = source.prepare(`SELECT id, codename, name FROM project`).all().reduce((m, p) => (m.set(p.id, p.codename ? `code:${p.codename}` : `name:${p.name}`), m), new Map());
+      const colorById = hasTable(source, 'use_color') ? source.prepare(`SELECT id, color_code FROM use_color`).all().reduce((m, r) => (m.set(r.id, r.color_code), m), new Map()) : new Map();
+      const mapRows = source.prepare(`SELECT id, map_name, project_id, color FROM map`).all();
+      for (const m of mapRows) {
+        const pKey = srcProjects.get(m.project_id);
+        if (!pKey) continue;
+        const p = pKey.startsWith('code:') ? target.prepare(`SELECT id FROM project WHERE codename=?`).get(pKey.slice(5)) : target.prepare(`SELECT id FROM project WHERE codename IS NULL AND name=?`).get(pKey.slice(5));
+        if (!p) continue;
+        const exists = target.prepare(`SELECT id FROM map WHERE project_id=? AND map_name=?`).get(p.id, m.map_name || null);
+        if (exists) continue;
+        const nm = target.prepare(`INSERT INTO map (map_name, project_id, color) VALUES (?, ?, (SELECT id FROM use_color WHERE color_code=?))`).run(m.map_name || null, p.id, colorById.get(m.color) || null);
+        summary.mappings++;
+        if (!hasTable(source, 'map_area')) continue;
+        const areaRows = source.prepare(`SELECT id, map_id, area_name, color FROM map_area WHERE map_id=?`).all(m.id);
+        for (const a of areaRows) {
+          const na = target.prepare(`INSERT INTO map_area (map_id, area_name, color) VALUES (?, ?, (SELECT id FROM use_color WHERE color_code=?))`).run(nm.lastInsertRowid, a.area_name || null, colorById.get(a.color) || null);
+          if (!hasTable(source, 'map_point')) continue;
+          const ptRows = source.prepare(`SELECT point_order, x, y FROM map_point WHERE area_id=? ORDER BY point_order`).all(a.id);
+          const ins = target.prepare(`INSERT INTO map_point (area_id, point_order, x, y) VALUES (?,?,?,?)`);
+          for (const pt of ptRows) ins.run(na.lastInsertRowid, pt.point_order, pt.x, pt.y);
+        }
+      }
+    }
+
+    target.exec("PRAGMA foreign_keys = ON");
   });
 
   try {
@@ -993,6 +1226,9 @@ module.exports = {
   getProjectTags, setProjectTags, addProjectTag, removeProjectTag,
   getObjectTags, setObjectTags, addObjectTag, removeObjectTag,
   getEventTags, setEventTags, addEventTag, removeEventTag,
+  getObjectsByHashtag,
+  getAllProjectUsedTags,
+  getEventsByHashtag,
   searchAll,
 };
 

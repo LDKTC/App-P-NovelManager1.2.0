@@ -1,18 +1,17 @@
 {
   "name": "DraconDex",
-  "version": "1.2.2",
+  "version": "2.1.1",
   "description": "Novel data management app",
   "main": "main.js",
   "scripts": {
     "start": "node ./start.js",
-    "postinstall": "node ./ensure-electron.js && electron-rebuild -f -w better-sqlite3",
+    "postinstall": "node ./ensure-electron.js",
     "build:portable": "electron-builder --win portable"
   },
   "dependencies": {
-    "better-sqlite3": "^12.11.1"
+    "node-sqlite3-wasm": "^0.8.59"
   },
   "devDependencies": {
-    "@electron/rebuild": "^4.0.4",
     "electron": "^42.5.0",
     "electron-builder": "^26.15.3"
   },
@@ -21,7 +20,7 @@
     "productName": "DraconDex",
     "asar": true,
     "directories": {
-      "output": "DragonDexPortable"
+      "output": "DraconDexPortable"
     },
     "files": [
       "index.html",
@@ -31,6 +30,7 @@
       "style.css",
       "database.js",
       "package.json",
+      "Image/**/*",
       "node_modules/**/*"
     ],
     "win": {
