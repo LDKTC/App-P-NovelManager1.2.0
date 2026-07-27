@@ -18,7 +18,7 @@
     <button class="title-settings-btn" id="settings-menu-btn" title="Settings" aria-haspopup="true" aria-expanded="false">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6 1.65 1.65 0 0 0 10 3.09V3a2 2 0 0 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.67 0 1.22.54 1.22 1.21v.58c0 .67-.55 1.21-1.22 1.21a1.65 1.65 0 0 0 0 3z"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
       </svg>
     </button>
     <div id="settings-menu" class="hidden"></div>
@@ -34,7 +34,7 @@
     <button class="nav-logo-btn" id="nav-logo-btn" title="DraconDex">
       <img src="Image/DraconDex-SymbolWhite.png" class="brand-img" alt="DraconDex">
     </button>
-    <button class="nav-btn project-only" title="Active Project" style="display:none" onclick="goToActiveProject()">
+    <button class="nav-btn director-only" id="director-project-shortcut" title="Projects" aria-label="Projects" style="display:none" onclick="openDirectorProjectShortcut()">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
       </svg>
@@ -45,6 +45,92 @@
         <path d="m6.2 5.3 3.1 3.9"/>
         <path d="m12.4 3.4 3.1 3.9"/>
         <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+      </svg>
+    </button>
+    <button class="nav-btn nexus-only" title="Navigator" style="display:none" onclick="selectModule('navigator')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    </button>
+    <button class="nav-btn navigator-only" data-panel="navigator" data-worldtab="original" title="Navigator" style="display:none" onclick="setWorldTab('original')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    </button>
+    <button class="nav-btn navigator-only" data-panel="navigator" data-worldtab="chars-cats" title="Characters & Categories" style="display:none" onclick="setWorldTab('chars-cats')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+    <button class="nav-btn navigator-only" data-panel="navigator" data-worldtab="maps-timeline" title="Map Timelines" style="display:none" onclick="setWorldTab('maps-timeline')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88"/></svg>
+    </button>
+    <button class="nav-btn navigator-only" data-panel="navigator" data-worldtab="tags" title="World Tags" style="display:none" onclick="setWorldTab('tags')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="9" x2="20" y2="9"/>
+        <line x1="4" y1="15" x2="20" y2="15"/>
+        <line x1="10" y1="3" x2="8" y2="21"/>
+        <line x1="16" y1="3" x2="14" y2="21"/>
+      </svg>
+    </button>
+    <button class="nav-btn nexus-only" title="Hero" style="display:none" onclick="selectModule('hero')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
+        <line x1="13" y1="19" x2="19" y2="13"/>
+        <line x1="16" y1="16" x2="20" y2="20"/>
+        <line x1="19" y1="21" x2="21" y2="19"/>
+      </svg>
+    </button>
+    <button class="nav-btn hero-only" data-panel="hero" title="Hero" style="display:none" onclick="setGameTab('project')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
+        <line x1="13" y1="19" x2="19" y2="13"/>
+        <line x1="16" y1="16" x2="20" y2="20"/>
+        <line x1="19" y1="21" x2="21" y2="19"/>
+      </svg>
+    </button>
+    <button class="nav-btn nexus-only" title="Writer" style="display:none" onclick="selectModule('writer')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </button>
+    <button class="nav-btn writer-only" data-panel="writer" title="Writer" style="display:none" onclick="setWriteTab('project')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </button>
+    <button class="nav-btn nexus-only" title="Sage" style="display:none" onclick="selectModule('sage')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+        <line x1="2" y1="20" x2="22" y2="20"/>
+      </svg>
+    </button>
+    <button class="nav-btn sage-only" data-panel="sage" title="Sage" style="display:none">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+        <line x1="2" y1="20" x2="22" y2="20"/>
+      </svg>
+    </button>
+    <button class="nav-btn nexus-only" title="Artisan" style="display:none" onclick="selectModule('artisan')">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/>
+        <path d="m18 15 4-4"/>
+        <path d="M21.5 11.5 19.586 9.586A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/>
+      </svg>
+    </button>
+    <button class="nav-btn artisan-only" data-panel="artisan" title="Artisan" style="display:none">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/>
+        <path d="m18 15 4-4"/>
+        <path d="M21.5 11.5 19.586 9.586A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/>
       </svg>
     </button>
     <button class="nav-btn director-only" data-panel="projects" title="โปรเจกต์" style="display:none">
@@ -79,6 +165,13 @@
         <line x1="4" y1="15" x2="20" y2="15"/>
         <line x1="10" y1="3" x2="8" y2="21"/>
         <line x1="16" y1="3" x2="14" y2="21"/>
+      </svg>
+    </button>
+    <button class="nav-btn artisan-shortcut" id="artisan-module-shortcut" title="Artisan" style="display:none" onclick="openArtisanFromModule()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/>
+        <path d="m18 15 4-4"/>
+        <path d="M21.5 11.5 19.586 9.586A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/>
       </svg>
     </button>
     <div style="flex:1"></div>
@@ -132,7 +225,11 @@
   </div>
 </div>
 <div id="toast"></div>
-  <!-- D3 is lazy-loaded when graph view is rendered -->
-  <script src="renderer.js"></script>
+  <!-- i18n data + Core + Director loaded immediately; Timeline/Relation/Map/Hashtag lazy-loaded on first use -->
+  <script src="src/renderer/i18n.js"></script>
+  <script src="src/renderer/core.js"></script>
+  <script src="src/renderer/director.js"></script>
+  <script src="src/renderer/modals.js"></script>
+  <script src="src/renderer/search.js"></script>
 </body>
 </html>

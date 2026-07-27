@@ -4,12 +4,7 @@ build/
 tmp-user-data/
 *.log
 
-
+/.flutter_sdk
+.flutter_sdk/flutter
+/.flutter_sdk
 tmp-driver-data/
-tmp-driver-data2/
-.worktrees/
-tmp-driver-data-a2/
-tmp-driver-data-b/
-
-module-showcase/
-

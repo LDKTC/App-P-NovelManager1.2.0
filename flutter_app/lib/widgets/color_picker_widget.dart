@@ -57,13 +57,13 @@ class _ColorPickerSheetState extends ConsumerState<ColorPickerSheet> {
                   recentAsync.when(
                     data: (recent) => _section('Recent', recent, theme),
                     loading: () => const SizedBox(),
-                    error: (_, __) => const SizedBox(),
+                    error: (_, _) => const SizedBox(),
                   ),
                   const SizedBox(height: 16),
                   colorsAsync.when(
                     data: (colors) => _section('All Colors', colors, theme),
                     loading: () => const CircularProgressIndicator(),
-                    error: (_, __) => const SizedBox(),
+                    error: (_, _) => const SizedBox(),
                   ),
                   const SizedBox(height: 16),
                   Text('Custom', style: theme.textTheme.titleSmall),
@@ -78,13 +78,14 @@ class _ColorPickerSheetState extends ConsumerState<ColorPickerSheet> {
                   FilledButton(
                     onPressed: () async {
                       final hex = '#${_pickerColor.toARGB32().toRadixString(16).substring(2).toUpperCase()}';
+                      final navigator = Navigator.of(context);
                       final dao = ref.read(colorDaoProvider);
                       dao.whenData((d) async {
                         await d.addColor(hex);
                         final colors = await d.getColors();
                         final found = colors.where((c) => c.colorCode.toUpperCase() == hex).firstOrNull;
                         if (found != null && mounted) widget.onColorSelected(found);
-                        if (mounted) Navigator.of(context).pop();
+                        if (mounted) navigator.pop();
                       });
                     },
                     child: const Text('Use Custom Color'),

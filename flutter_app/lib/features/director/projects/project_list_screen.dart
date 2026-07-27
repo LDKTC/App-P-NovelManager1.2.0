@@ -7,7 +7,6 @@ import '../../../providers/project_provider.dart';
 import '../../../providers/db_providers.dart';
 import '../../../widgets/color_dot.dart';
 import '../../../widgets/confirm_dialog.dart';
-import '../../../widgets/color_picker_widget.dart';
 import 'dialogs/folder_dialog.dart';
 import 'dialogs/project_dialog.dart';
 
@@ -56,7 +55,7 @@ class ProjectListScreen extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.folder_open, size: 64, color: theme.colorScheme.onSurface.withOpacity(0.3)),
+            Icon(Icons.folder_open, size: 64, color: theme.colorScheme.onSurface.withValues(alpha: 0.3)),
             const SizedBox(height: 16),
             Text('No projects yet. Tap + to create one.', style: theme.textTheme.bodyMedium),
           ],

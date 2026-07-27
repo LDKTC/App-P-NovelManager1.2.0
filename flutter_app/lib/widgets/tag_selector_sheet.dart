@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/models/hashtag_model.dart';
 import '../providers/hashtag_provider.dart';
 import 'color_dot.dart';
 
@@ -75,8 +74,11 @@ class _TagSelectorSheetState extends ConsumerState<TagSelectorSheet> {
                     return CheckboxListTile(
                       value: sel,
                       onChanged: (v) => setState(() {
-                        if (v == true) _selected.add(tag.id);
-                        else _selected.remove(tag.id);
+                        if (v == true) {
+                          _selected.add(tag.id);
+                        } else {
+                          _selected.remove(tag.id);
+                        }
                       }),
                       title: Row(children: [
                         if (tag.colorCode != null) ...[
@@ -89,7 +91,7 @@ class _TagSelectorSheetState extends ConsumerState<TagSelectorSheet> {
                   },
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, __) => const SizedBox(),
+                error: (_, _) => const SizedBox(),
               ),
             ),
           ],

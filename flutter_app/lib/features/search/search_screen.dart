@@ -10,7 +10,7 @@ final _searchResultProvider = FutureProvider.family<SearchResult?, String>((ref,
   return ref.watch(searchDaoProvider).when(
         data: (d) => d.searchAll(query),
         loading: () => null,
-        error: (_, __) => null,
+        error: (_, _) => null,
       );
 });
 
@@ -68,7 +68,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       _SectionHeader('Projects (${result.projects.length})'),
                       ...result.projects.map((p) => ListTile(
                             leading: ColorDot(colorCode: p.colorCode),
-                            title: Text(p.name ?? 'Project ${p.id}'),
+                            title: Text(p.name),
                             subtitle: p.codename != null ? Text(p.codename!) : null,
                           )),
                     ],
@@ -76,7 +76,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       _SectionHeader('Objects (${result.objects.length})'),
                       ...result.objects.map((o) => ListTile(
                             leading: ColorDot(colorCode: o.colorCode),
-                            title: Text(o.name ?? 'Object ${o.id}'),
+                            title: Text(o.name),
                             subtitle: Text(o.categoryName ?? ''),
                           )),
                     ],

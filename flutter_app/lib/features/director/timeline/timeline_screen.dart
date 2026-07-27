@@ -5,19 +5,18 @@ import '../../../providers/db_providers.dart';
 import '../../../providers/project_provider.dart';
 import '../../../widgets/color_dot.dart';
 import '../../../widgets/confirm_dialog.dart';
-import '../../../widgets/color_picker_widget.dart';
 import 'dialogs/timeline_dialog.dart';
 import 'dialogs/event_dialog.dart';
 import 'timeline_graph_painter.dart';
 
 final _timelinesProvider = FutureProvider.family<List<TimelineModel>, int>((ref, pid) async {
   final dao = ref.watch(timelineDaoProvider);
-  return dao.when(data: (d) => d.getTimelines(pid), loading: () => Future.value([]), error: (_, __) => Future.value([]));
+  return dao.when(data: (d) => d.getTimelines(pid), loading: () => Future.value([]), error: (_, _) => Future.value([]));
 });
 
 final _eventsProvider = FutureProvider.family<List<TimelineEventModel>, int>((ref, tlId) async {
   final dao = ref.watch(timelineDaoProvider);
-  return dao.when(data: (d) => d.getEvents(tlId), loading: () => Future.value([]), error: (_, __) => Future.value([]));
+  return dao.when(data: (d) => d.getEvents(tlId), loading: () => Future.value([]), error: (_, _) => Future.value([]));
 });
 
 class TimelineScreen extends ConsumerStatefulWidget {
@@ -86,7 +85,7 @@ class _TimelineScreenState extends ConsumerState<TimelineScreen> {
                   );
                 },
                 loading: () => const SizedBox(),
-                error: (_, __) => const SizedBox(),
+                error: (_, _) => const SizedBox(),
               ),
               const Divider(height: 1),
               Expanded(child: _EventPanel(timelineId: _selectedTlId!, ref: ref)),
@@ -320,7 +319,7 @@ class _EventDetailSheetState extends ConsumerState<_EventDetailSheet> {
     await widget.ref.read(timelineDaoProvider).when(
       data: (d) => d.updateEventStory(widget.event.id, _storyCtrl.text.isEmpty ? null : _storyCtrl.text),
       loading: () async {},
-      error: (_, __) async {},
+      error: (_, _) async {},
     );
     widget.ref.invalidate(_eventsProvider(widget.timelineId));
     setState(() => _dirty = false);
