@@ -1,5 +1,10 @@
 node_modules/
-dist/
+DraconDexPortable/
 build/
 tmp-user-data/
 *.log
+
+/.flutter_sdk
+.flutter_sdk/flutter
+/.flutter_sdk
+tmp-driver-data/

@@ -10,7 +10,7 @@ const I = {
   hashtag: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>`,
   import: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
   export: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
-  colors: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C17.52 22 22 17.52 22 12S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm0-18a8 8 0 0 1 8 8 8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8z"/><circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"/><circle cx="11.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="9.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.5" fill="currentColor"/></svg>`,
+  colors: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="7.5" cy="10.5" r="1.5"/><circle cx="11.5" cy="7.5" r="1.5"/><circle cx="16.5" cy="9.5" r="1.5"/><circle cx="15.5" cy="14.5" r="1.5"/></svg>`,
   edit: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
   delete: `<svg class="icon icon-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
   move: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>`,
@@ -23,7 +23,8 @@ const I = {
   fields: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>`,
   settings: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
   list: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`,
-  table: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="10" y1="9" x2="10" y2="21"/></svg>`
+  table: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="10" y1="9" x2="10" y2="21"/></svg>`,
+  director: `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 3.9"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>`
 };
 
 const UI_SETTINGS_KEY = 'novel-manager-ui-settings';
@@ -43,7 +44,8 @@ const L = {
     importDb:'Import DB', exportDb:'Export DB', search:'Search...',
     newFolder:'New folder', newProject:'New project', createProject:'Create project',
     welcomeTitle:'Novel Manager', welcomeText:'Select a project from the list, or create a new one.',
-    colorPanel:'Colors', saved:'Saved', deleted:'Deleted', created:'Created', applied:'Applied'
+    colorPanel:'Colors', saved:'Saved', deleted:'Deleted', created:'Created', applied:'Applied',
+    nexus:'Nexus', director:'Director', nexusWelcomeTitle:'DraconDex', nexusWelcomeText:'Choose a module to get started.'
   },
   ja: {
     settings:'設定', theme:'テーマ', language:'言語', uiSize:'UIサイズ',
@@ -54,7 +56,8 @@ const L = {
     importDb:'DBをインポート', exportDb:'DBをエクスポート', search:'検索...',
     newFolder:'新規フォルダー', newProject:'新規プロジェクト', createProject:'プロジェクト作成',
     welcomeTitle:'Novel Manager', welcomeText:'左の一覧からプロジェクトを選ぶか、新しく作成してください。',
-    colorPanel:'色', saved:'保存しました', deleted:'削除しました', created:'作成しました', applied:'適用しました'
+    colorPanel:'色', saved:'保存しました', deleted:'削除しました', created:'作成しました', applied:'適用しました',
+    nexus:'Nexus', director:'ディレクター', nexusWelcomeTitle:'DraconDex', nexusWelcomeText:'モジュールを選択してください。'
   },
   ko: {
     settings:'설정', theme:'테마', language:'언어', uiSize:'UI 크기',
@@ -65,7 +68,8 @@ const L = {
     importDb:'DB 가져오기', exportDb:'DB 내보내기', search:'검색...',
     newFolder:'새 폴더', newProject:'새 프로젝트', createProject:'프로젝트 만들기',
     welcomeTitle:'Novel Manager', welcomeText:'왼쪽 목록에서 프로젝트를 선택하거나 새 프로젝트를 만드세요.',
-    colorPanel:'색상', saved:'저장됨', deleted:'삭제됨', created:'생성됨', applied:'적용됨'
+    colorPanel:'색상', saved:'저장됨', deleted:'삭제됨', created:'생성됨', applied:'적용됨',
+    nexus:'Nexus', director:'디렉터', nexusWelcomeTitle:'DraconDex', nexusWelcomeText:'모듈을 선택하세요.'
   },
   th: {
     settings:'ตั้งค่า', theme:'ธีม', language:'ภาษา', uiSize:'ขนาด UI',
@@ -76,7 +80,8 @@ const L = {
     importDb:'Import DB', exportDb:'Export DB', search:'ค้นหา...',
     newFolder:'สร้างโฟลเดอร์ใหม่', newProject:'สร้างโปรเจกต์ใหม่', createProject:'สร้างโปรเจกต์ใหม่',
     welcomeTitle:'Novel Manager', welcomeText:'เลือกโปรเจกต์จากรายการทางซ้าย หรือสร้างโปรเจกต์ใหม่',
-    colorPanel:'สี', saved:'บันทึกแล้ว', deleted:'ลบแล้ว', created:'สร้างแล้ว', applied:'ปรับใช้แล้ว'
+    colorPanel:'สี', saved:'บันทึกแล้ว', deleted:'ลบแล้ว', created:'สร้างแล้ว', applied:'ปรับใช้แล้ว',
+    nexus:'Nexus', director:'Director', nexusWelcomeTitle:'DraconDex', nexusWelcomeText:'เลือกโมดูลที่ต้องการใช้งาน'
   },
   zh: {
     settings:'设置', theme:'主题', language:'语言', uiSize:'界面大小',
@@ -87,7 +92,8 @@ const L = {
     importDb:'导入 DB', exportDb:'导出 DB', search:'搜索...',
     newFolder:'新建文件夹', newProject:'新建项目', createProject:'创建项目',
     welcomeTitle:'Novel Manager', welcomeText:'从左侧列表选择项目，或创建一个新项目。',
-    colorPanel:'颜色', saved:'已保存', deleted:'已删除', created:'已创建', applied:'已应用'
+    colorPanel:'颜色', saved:'已保存', deleted:'已删除', created:'已创建', applied:'已应用',
+    nexus:'Nexus', director:'Director', nexusWelcomeTitle:'DraconDex', nexusWelcomeText:'选择一个模块以开始。'
   }
 };
 const LANGUAGE_LABELS = { en:'ENG - English', ja:'JP - 日本語', ko:'KR - 한국어', th:'TH - ไทย', zh:'CN - 中文' };
@@ -112,7 +118,35 @@ const COMMON_UI_TEXT = {
   'ความสัมพันธ์': { en:'Relations', ja:'関係', ko:'관계', zh:'关系' },
   'บันทึกเรียบร้อยแล้ว': { en:'Saved', ja:'保存しました', ko:'저장됨', zh:'已保存' },
   'ลบเรียบร้อยแล้ว': { en:'Deleted', ja:'削除しました', ko:'삭제됨', zh:'已删除' },
-  'สร้างแล้ว': { en:'Created', ja:'作成しました', ko:'생성됨', zh:'已创建' }
+  'สร้างแล้ว': { en:'Created', ja:'作成しました', ko:'생성됨', zh:'已创建' },
+  'ใช้ล่าสุด': { en:'Recently used', ja:'最近使用', ko:'최근 사용', zh:'最近使用' },
+  'สีทั้งหมด': { en:'All colors', ja:'すべての色', ko:'모든 색상', zh:'所有颜色' },
+  'ยังไม่มีประวัติการใช้สี': { en:'No color history', ja:'色の使用履歴なし', ko:'색상 기록 없음', zh:'无颜色记录' },
+  'เพิ่มสีใหม่': { en:'Add color', ja:'色を追加', ko:'색상 추가', zh:'添加颜色' },
+  'เลือกสี': { en:'Select color', ja:'色を選択', ko:'색상 선택', zh:'选择颜色' },
+  'ไม่มีชื่อ': { en:'Untitled', ja:'名前なし', ko:'이름 없음', zh:'无标题' },
+  'ป้ายกำกับ (Tags)': { en:'Tags', ja:'タグ', ko:'태그', zh:'标签' },
+  'พิมพ์ค้นหา Tag...': { en:'Search tag...', ja:'タグを検索...', ko:'태그 검색...', zh:'搜索标签...' },
+  'ไม่มี Tag ให้เลือก': { en:'No tags available', ja:'タグなし', ko:'태그 없음', zh:'无可用标签' },
+  'ชื่อ Timeline *': { en:'Timeline name *', ja:'タイムライン名 *', ko:'타임라인 이름 *', zh:'时间线名称 *' },
+  'วันที่เริ่มต้น *': { en:'Start date *', ja:'開始日 *', ko:'시작일 *', zh:'开始日期 *' },
+  'วันที่สิ้นสุด (ไม่บังคับ)': { en:'End date (optional)', ja:'終了日（任意）', ko:'종료일 (선택)', zh:'结束日期（可选）' },
+  'สตอรี่': { en:'Story', ja:'ストーリー', ko:'스토리', zh:'故事' },
+  'ชื่อเหตุการณ์ *': { en:'Event name *', ja:'イベント名 *', ko:'이벤트 이름 *', zh:'事件名称 *' },
+  'ชื่อ Tag *': { en:'Tag name *', ja:'タグ名 *', ko:'태그 이름 *', zh:'标签名称 *' },
+  'ชื่อ (ไม่ต้องใส่ #)': { en:'Name (no # needed)', ja:'名前（#不要）', ko:'이름 (# 불필요)', zh:'名称（无需#）' },
+  'ลบโปรเจกต์': { en:'Delete project', ja:'プロジェクトを削除', ko:'프로젝트 삭제', zh:'删除项目' },
+  'ลบ Timeline? เหตุการณ์ทั้งหมดจะหาย': { en:'Delete Timeline? All events will be lost.', ja:'タイムラインを削除？すべてのイベントが消えます', ko:'타임라인 삭제? 모든 이벤트가 삭제됩니다', zh:'删除时间线？所有事件将丢失' },
+  'ลบ Tag นี้?': { en:'Delete this tag?', ja:'このタグを削除？', ko:'이 태그를 삭제?', zh:'删除此标签？' },
+  'เหตุการณ์ทั้งหมด': { en:'All Events', ja:'すべてのイベント', ko:'모든 이벤트', zh:'所有事件' },
+  'เพิ่มเหตุการณ์': { en:'Add event', ja:'イベントを追加', ko:'이벤트 추가', zh:'添加事件' },
+  'เขียนสตอรี่ที่เกิดขึ้นในเหตุการณ์นี้...': { en:'Write the story of this event...', ja:'このイベントのストーリーを書く...', ko:'이 이벤트의 이야기 작성...', zh:'写下这个事件的故事...' },
+  'Category': { en:'Category', ja:'カテゴリー', ko:'카테고리', zh:'分类' },
+  'Project Details': { en:'Project Details', ja:'プロジェクト詳細', ko:'프로젝트 상세', zh:'项目详情' },
+  'New category': { en:'New category', ja:'新規カテゴリー', ko:'새 카테고리', zh:'新建分类' },
+  'No categories': { en:'No categories', ja:'カテゴリーなし', ko:'카테고리 없음', zh:'无分类' },
+  'No details': { en:'No details', ja:'詳細なし', ko:'상세 없음', zh:'无详情' },
+  'Back to project list': { en:'Back to project list', ja:'プロジェクト一覧に戻る', ko:'프로젝트 목록으로', zh:'返回项目列表' }
 };
 
 function loadUiSettings(){
@@ -129,13 +163,15 @@ function loadUiSettings(){
 const S = {
   folders:[], projects:[], colors:[],
   recentColors:[],
+  activeModule:null,
   project:null, category:null, object:null,
   timeline:null, relTab:0, map:null, mapAreaId:null, mapTool:'move',
   descOpen:false, openFolders:new Set(),
-  view:'projects',
+  view:'nexus',
   catView:'list',
   projectTabs:[],
   activeProjectTabId:null,
+  projectHashtagId:null,
   settings:loadUiSettings(),
   relListHeight:null,
   leftPanelCollapsed:localStorage.getItem(LEFT_PANEL_COLLAPSED_KEY) === '1',
@@ -158,8 +194,7 @@ async function init() {
   renderSettingsMenu();
   translateStaticChrome();
   renderProjectTabs();
-  renderSidebar();
-  renderWelcome();
+  renderNexusHome();
   bindNav();
   bindSearch();
 }
@@ -225,8 +260,14 @@ function applyUiSettings(){
   document.documentElement.lang = S.settings.language;
   const scale = S.settings.size / 100;
   document.documentElement.style.setProperty('--ui-scale', String(scale));
-  // Apply transform-based scaling instead of non-standard zoom property
-  document.documentElement.style.setProperty('--ui-transform-scale', String(scale));
+  document.body.style.zoom = String(scale);
+  if(scale !== 1){
+    document.body.style.height = `${(100 / scale).toFixed(4)}vh`;
+    document.body.style.width  = `${(100 / scale).toFixed(4)}vw`;
+  } else {
+    document.body.style.height = '';
+    document.body.style.width  = '';
+  }
 }
 
 function setUiSetting(key, value){
@@ -321,7 +362,7 @@ function translateStaticChrome(){
   q('#btn-import-db')?.setAttribute('title', t('importDb'));
   q('#btn-export-db')?.setAttribute('title', t('exportDb'));
   applyLeftPanelState();
-  updateProjectNavButton();
+  updateTopNavButton();
   translateCommonUiText();
 }
 
@@ -385,25 +426,48 @@ function bindWindowChrome(){
   });
 }
 
-function updateProjectNavButton(){
-  const btn = q('.nav-btn[data-panel="projects"]');
-  if(!btn) return;
-  const inProject = !!S.project;
-  btn.innerHTML = inProject ? I.return : I.projects;
-  btn.setAttribute('title', inProject ? 'Back to project list' : t('projects'));
-  btn.classList.toggle('is-return', inProject);
+function updateTopNavButton(){
+  const logoBtn = q('#nav-logo-btn');
+  const inModule = !!S.activeModule;
+  if(logoBtn){
+    logoBtn.innerHTML = inModule
+      ? I.return
+      : `<img src="Image/DraconDex-SymbolWhite.png" class="brand-img" alt="DraconDex">`;
+    const title = !inModule ? 'DraconDex' : S.project ? t('Back to project list') : 'Back to Nexus';
+    logoBtn.setAttribute('title', title);
+    logoBtn.classList.toggle('is-return', inModule);
+  }
+  document.querySelectorAll('.nav-btn.nexus-only').forEach(btn => {
+    btn.style.display = (!S.activeModule) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-btn.director-only').forEach(btn => {
+    btn.style.display = (S.activeModule === 'director') ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-btn.project-only').forEach(btn => {
+    btn.style.display = (S.activeModule === 'director' && !!S.project) ? '' : 'none';
+  });
 }
 
 function returnToProjectList(){
   S.project = null; S.category = null; S.object = null; S.timeline = null; S.map = null; S.mapAreaId = null;
-  S.activeProjectTabId = null;
+  S.activeProjectTabId = null; S.projectHashtagId = null;
   S.view = 'projects';
   document.querySelectorAll('.nav-btn[data-panel]').forEach(b=>b.classList.remove('active'));
   q('.nav-btn[data-panel="projects"]')?.classList.add('active');
   renderProjectTabs();
-  updateProjectNavButton();
+  updateTopNavButton();
   renderSidebar();
   renderWelcome();
+}
+
+
+async function goToActiveProject(){
+  if(!S.project) return;
+  S.view = 'projects';
+  document.querySelectorAll('.nav-btn[data-panel]').forEach(b => b.classList.remove('active'));
+  q('.nav-btn[data-panel="projects"]')?.classList.add('active');
+  updateTopNavButton();
+  await renderProject();
 }
 
 function tabFromProject(project){
@@ -434,7 +498,7 @@ function renderProjectTabs(){
       <span class="tab-close" onclick="event.stopPropagation();closeProjectTab(${tab.id})" title="${t('closeTab')}">&times;</span>
     </button>
   `).join('');
-  document.title = S.project ? `${S.project.name} - Novel Manager` : 'Novel Manager';
+  document.title = S.project ? `${S.project.name} - DraconDex` : 'DraconDex';
 }
 
 async function switchProjectTab(id){
@@ -598,16 +662,16 @@ async function addColorFromPicker(){
 
 // ═══ NAV & VIEW ════════════════════════════════════════
 function bindNav() {
+  q('#nav-logo-btn')?.addEventListener('click', () => {
+    if(S.project) returnToProjectList();
+    else if(S.activeModule) returnToNexus();
+  });
   document.querySelectorAll('.nav-btn[data-panel]').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      if(btn.dataset.panel === 'projects' && S.project){
-        returnToProjectList();
-        return;
-      }
       document.querySelectorAll('.nav-btn[data-panel]').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       S.view = btn.dataset.panel;
-      updateProjectNavButton();
+      updateTopNavButton();
       switchView(S.view);
     });
   });
@@ -649,13 +713,59 @@ function switchView(v) {
     konvaStage = null;
   }
   q('#main-inner')?.classList.toggle('relation-main', v === 'relation');
-  updateProjectNavButton();
-  if      (v==='projects') { if(S.project) renderProject(); else { renderSidebar(); renderWelcome(); } }
-  else if (v==='timeline') renderTimelineView();
-  else if (v==='relation') renderRelationView();
-  else if (v==='map')      renderMapView();
-  else if (v==='hashtag')  renderHashtagView();
-  else if (v==='colors')   { q('#left-panel-inner').innerHTML=`<div class="ph"><h4>${t('colorPanel')}</h4></div>`; renderColorSettings(); }
+  updateTopNavButton();
+  if      (v==='nexus')           renderNexusHome();
+  else if (v==='projects')        { if(S.project) renderProject(); else { renderSidebar(); renderWelcome(); } }
+  else if (v==='timeline')        renderTimelineView();
+  else if (v==='relation')        renderRelationView();
+  else if (v==='map')             renderMapView();
+  else if (v==='hashtag')         renderHashtagView();
+  else if (v==='project-hashtag') renderProjectHashtagView();
+  else if (v==='colors')          { q('#left-panel-inner').innerHTML=`<div class="ph"><h4>${t('colorPanel')}</h4></div>`; renderColorSettings(); }
+}
+
+// ═══ NEXUS HUB ═════════════════════════════════════════
+function renderNexusHome() {
+  S.view = 'nexus';
+  S.activeModule = null;
+  if (konvaStage) { try { konvaStage.destroy(); } catch(e){} konvaStage = null; }
+  document.querySelectorAll('.nav-btn[data-panel]').forEach(b => b.classList.remove('active'));
+  updateTopNavButton();
+  q('#left-panel-inner').innerHTML = `
+    <div class="ph"><h4>${t('nexus')}</h4></div>
+    <div class="module-item" onclick="selectModule('director')">
+      <span class="module-icon">${I.director}</span>
+      <span class="module-name">${t('director')}</span>
+      <svg class="icon module-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>`;
+  q('#main-inner')?.classList.remove('relation-main');
+  q('#main-inner').innerHTML = `<div class="empty" style="margin-top:80px">
+    <div class="ei"><img src="Image/DraconDex-SymbolWhite.png" class="brand-img" alt="DraconDex" style="height:48px;width:48px;opacity:.35"></div>
+    <h3>${t('nexusWelcomeTitle')}</h3>
+    <p>${t('nexusWelcomeText')}</p>
+  </div>`;
+}
+
+function selectModule(name) {
+  S.activeModule = name;
+  if (name === 'director') {
+    S.view = 'projects';
+    document.querySelectorAll('.nav-btn[data-panel]').forEach(b => b.classList.remove('active'));
+    q('.nav-btn[data-panel="projects"]')?.classList.add('active');
+    updateTopNavButton();
+    renderSidebar();
+    renderWelcome();
+  }
+}
+
+function returnToNexus() {
+  S.activeModule = null;
+  S.project = null; S.category = null; S.object = null;
+  S.timeline = null; S.map = null; S.mapAreaId = null;
+  S.activeProjectTabId = null; S.projectHashtagId = null;
+  S.view = 'nexus';
+  renderProjectTabs();
+  renderNexusHome();
 }
 
 // ═══ SIDEBAR ═══════════════════════════════════════════
@@ -668,8 +778,9 @@ async function reloadSidebar() {
     .map(t => tabFromProject(byId.get(t.id)));
   if(S.activeProjectTabId && !byId.has(S.activeProjectTabId)) S.activeProjectTabId = null;
   renderProjectTabs();
-  updateProjectNavButton();
-  if(S.project && S.view === 'projects') await renderProjectSidebar();
+  updateTopNavButton();
+  if(!S.activeModule) renderNexusHome();
+  else if(S.project && S.view === 'projects') await renderProjectSidebar();
   else renderSidebar();
 }
 
@@ -819,22 +930,22 @@ async function selectProject(id) {
 }
 
 async function activateProject(project) {
-  S.project = project; S.object=null; S.timeline=null; S.map=null; S.mapAreaId=null;
+  S.activeModule = 'director';
+  S.project = project; S.object=null; S.timeline=null; S.map=null; S.mapAreaId=null; S.projectHashtagId=null;
   S.activeProjectTabId = project.id;
   const cats = await api.category.getAll(project.id); S.category=cats[0]||null;
   S.view = 'projects';
   document.querySelectorAll('.nav-btn[data-panel]').forEach(b=>b.classList.remove('active'));
-  q('.nav-btn[data-panel="projects"]').classList.add('active');
+  q('.nav-btn[data-panel="projects"]')?.classList.add('active');
   renderProjectTabs();
-  updateProjectNavButton();
+  updateTopNavButton();
   await renderProject();
 }
 
 async function renderProject(){
   q('#main-inner')?.classList.remove('relation-main');
   const p=S.project, col=p.color_code||'#6366f1';
-  const cats  = await api.category.getAll(p.id);
-  const descs = await api.project.getDesc(p.id);
+  const cats = await api.category.getAll(p.id);
   if(S.view === 'projects') await renderProjectSidebar();
 
   let h = `<div class="ch">
@@ -844,33 +955,6 @@ async function renderProject(){
     <button class="btn btn-p" onclick="openCategoryModal()" style="padding:6px 12px;font-size:12.5px">${I.plus} Category</button>
   </div>`;
 
-  h += `<div class="desc-sec">
-    <div class="desc-hd" onclick="tglDesc()">
-      <svg class="ftgl ${S.descOpen?'open':''}" style="width:8px;height:8px;margin-right:6px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      <span style="flex:1;display:flex;align-items:center;gap:6px;"><span class="icon" style="color:var(--accent);">${I.star}</span> รายละเอียดโปรเจกต์</span>
-      <button class="btn btn-g btn-i" onclick="event.stopPropagation();openDescModal()" title="เพิ่ม">${I.plus}</button>
-    </div>
-    ${S.descOpen ? `<div class="desc-body">${
-      !descs.length
-        ? `<p style="font-size:12px;color:var(--t3);padding:10px 14px">ยังไม่มีรายละเอียด</p>`
-        : descs.map(d=>`<div class="desc-row">
-            <span class="dk">${x(d.attribute_name||'--')}</span>
-            <span class="dv">${x(d.attribute_text||'')}</span>
-            <button class="btn btn-g btn-i" onclick="openDescModal(${d.id})" title="แก้ไข">${I.edit}</button>
-            <button class="btn btn-g btn-i" onclick="delDesc(${d.id})" style="color:var(--danger)" title="ลบ">${I.delete}</button>
-          </div>`).join('')
-    }</div>` : ''}
-  </div>`;
-
-  h += `<div class="ctabs">`;
-  for(const c of cats){
-    const cc=c.color_code||'#6366f1', act=S.category?.id===c.id;
-    h += `<button class="ctab ${act?'active':''}" onclick="selectCategory(${c.id})">
-      <span class="cdot2" style="${act?'':'background:'+cc}"></span>${x(c.category_name)}
-      <span class="tedit" onclick="event.stopPropagation();openCategoryModal(${c.id})">${I.edit}</span>
-    </button>`;
-  }
-  h += `</div>`;
 
   if(!cats.length){
     h += `<div class="empty"><div class="ei">${I.pin}</div><h3>ยังไม่มี Category</h3>
@@ -1476,12 +1560,13 @@ async function renderTimelineDetail(tlid){
         </div>
       </div>
       <div class="objrow-story">
-        <textarea id="ev-story-${ev.id}" class="tl-story" placeholder="เขียนสตอรี่ที่เกิดขึ้นในเหตุการณ์นี้..." onclick="event.stopPropagation()" onchange="saveEventStory(${ev.id})">${x(ev.story||'')}</textarea>
+        <textarea id="ev-story-${ev.id}" class="tl-story" placeholder="เขียนสตอรี่ที่เกิดขึ้นในเหตุการณ์นี้..." onclick="event.stopPropagation()" oninput="autoExpand(this)" onchange="saveEventStory(${ev.id})">${x(ev.story||'')}</textarea>
       </div>`;
     }
     h += `</div></div>`;
   }
   q('#main-inner').innerHTML = h;
+  document.querySelectorAll('.tl-story').forEach(ta => autoExpand(ta));
   if(evs.length) bindTimelineGraphInteractions(tlid);
 }
 
@@ -2294,7 +2379,7 @@ function getMapAreaBoundaryPoints(points){
 }
 
 function mapAreaLinePoints(points){
-  return getMapAreaBoundaryPoints(points).map(p => [p.x, p.y]).flat();
+  return points.map(p => [p.x, p.y]).flat();
 }
 
 async function renderMapView(){
@@ -2585,6 +2670,88 @@ async function saveMapArea(id){ const n=q('#area-n').value.trim(); if(!n) return
 async function delMapArea(id){ if(!confirm('ลบ Area นี้?')) return; await api.map.deleteArea(id); closeModal(); if(S.mapAreaId===id) S.mapAreaId=null; delete mapState.pointsByArea[id]; await renderMapView(); toast('ลบเรียบร้อยแล้ว'); }
 
 // ═══ HASHTAG VIEW ══════════════════════════════════════
+function autoExpand(el){
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+async function renderProjectHashtagView(){
+  if(!S.project){
+    q('#left-panel-inner').innerHTML=`<div class="empty" style="padding:40px 10px"><div class="ei">${I.hashtag}</div><p style="text-align:center">กรุณาเลือกโปรเจกต์ก่อน</p></div>`;
+    q('#main-inner').innerHTML=`<div class="empty" style="margin-top:80px"><div class="ei">${I.hashtag}</div><h3>Project Tags</h3><p>กรุณาเลือกโปรเจกต์ก่อน</p></div>`;
+    return;
+  }
+  const tags = await api.project.getAllUsedTags(S.project.id);
+  let lh = `<div class="ph"><h4>Project Tags</h4></div>`;
+  if(tags.length){
+    lh += tags.map(t => {
+      const col = t.color_code || '#6366f1';
+      const act = S.projectHashtagId === t.id;
+      return `<div class="li ${act?'active':''}" onclick="selectProjectHashtag(${t.id})">
+        <span class="hn" style="color:${col};font-weight:700">#${x(t.tag_name)}</span>
+      </div>`;
+    }).join('');
+  } else {
+    lh += `<div class="empty" style="padding:20px 10px"><p style="font-size:12px;color:var(--t3);text-align:center">ยังไม่มี Tag ในโปรเจกต์นี้</p></div>`;
+  }
+  q('#left-panel-inner').innerHTML = lh;
+
+  if(!S.projectHashtagId || !tags.find(t=>t.id===S.projectHashtagId)){
+    q('#main-inner').innerHTML = `<div class="empty" style="margin-top:80px"><div class="ei">${I.hashtag}</div><h3>Project Tags</h3><p>เลือก Tag เพื่อดูรายการ Object และ Event ที่ใช้ Tag นี้</p></div>`;
+    return;
+  }
+  const tag = tags.find(t=>t.id===S.projectHashtagId);
+  const [objects, events] = await Promise.all([
+    api.hashtag.getObjectsByTag(S.projectHashtagId, S.project.id),
+    api.hashtag.getEventsByTag(S.projectHashtagId, S.project.id)
+  ]);
+  const col = tag?.color_code || '#6366f1';
+  const total = objects.length + events.length;
+  let h = `<div class="ch"><span class="hn" style="color:${col};font-size:1.4em;font-weight:700">#${x(tag?.tag_name||'')}</span>
+    <span style="font-size:12px;color:var(--t3);margin-left:8px">${total} รายการ</span>
+  </div>`;
+  if(!total){
+    h += `<div class="empty"><div class="ei">${I.hashtag}</div><h3>ยังไม่มี Object หรือ Event ใช้ Tag นี้</h3></div>`;
+  } else {
+    if(objects.length){
+      h += `<div style="padding:4px 16px 2px;font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Objects (${objects.length})</div>`;
+      h += `<div class="objlist">`;
+      for(const o of objects){
+        const oc = o.color_code || '#6366f1';
+        h += `<div class="objrow" onclick="selectSearchObject(${o.project_id},${o.category_id},${o.id})">
+          <div class="odot" style="background:${oc}"></div>
+          <div style="flex:1;min-width:0">
+            <div class="oname">${x(o.name)}</div>
+            <div style="font-size:12px;color:var(--t3);margin-top:2px">${x(o.category_name)}</div>
+          </div>
+        </div>`;
+      }
+      h += `</div>`;
+    }
+    if(events.length){
+      h += `<div style="padding:4px 16px 2px;font-size:11px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Events (${events.length})</div>`;
+      h += `<div class="objlist">`;
+      for(const e of events){
+        const ec = e.color_code || '#6366f1';
+        h += `<div class="objrow">
+          <div class="odot" style="background:${ec}"></div>
+          <div style="flex:1;min-width:0">
+            <div class="oname">${x(e.event_name||'Untitled Event')}</div>
+            <div style="font-size:12px;color:var(--t3);margin-top:2px">${x(e.line_name||'')}</div>
+          </div>
+        </div>`;
+      }
+      h += `</div>`;
+    }
+  }
+  q('#main-inner').innerHTML = h;
+}
+
+async function selectProjectHashtag(tagId){
+  S.projectHashtagId = tagId;
+  await renderProjectHashtagView();
+}
+
 async function renderHashtagView(){
   q('#left-panel-inner').innerHTML=`<div class="ph"><h4>ป้ายกำกับ</h4></div><div class="empty" style="padding:30px 10px"><div class="ei" style="font-size:28px;opacity:.3">🏷️</div></div>`;
   const tags=await api.hashtag.getAll();
@@ -2840,14 +3007,16 @@ async function saveTimeline(id){ const n=q('#tn').value.trim(); if(!n) return; a
 async function delTimeline(id){ if(!confirm('ลบ Timeline? เหตุการณ์ทั้งหมดจะหาย')) return; await api.timeline.delete(id); closeModal(); if(S.timeline?.id===id) S.timeline=null; await renderTimelineView(); toast('ลบเรียบร้อยแล้ว'); }
 
 function dateInputsHTML(prefix,ev,dayKey,mKey,yKey,hKey,minKey){
-  return `<div class="date-row">
-    <input id="${prefix}-d" type="number" placeholder="วัน"   min="1"  value="${ev?ev[dayKey]||'':''}">
-    <input id="${prefix}-m" type="number" placeholder="เดือน" min="1"  value="${ev?ev[mKey]  ||'':''}">
-    <input id="${prefix}-y" type="number" placeholder="ปี"           value="${ev?ev[yKey]  ||'':''}">
-    <input id="${prefix}-h" type="number" placeholder="ชม."   min="0" max="23" value="${ev?ev[hKey]  ||0:0}">
-    <input id="${prefix}-min" type="number" placeholder="น."  min="0" max="59" value="${ev?ev[minKey]||0:0}">
-  </div>
-  <div class="date-labels"><span>วัน</span><span>เดือน</span><span>ปี</span><span>ชั่วโมง</span><span>นาที</span></div>`;
+  return `<div class="date-row-inline">
+    <input id="${prefix}-d" class="date-inp" type="number" placeholder="DD" min="1" value="${ev?ev[dayKey]||'':''}">
+    <span class="date-sep">/</span>
+    <input id="${prefix}-m" class="date-inp" type="number" placeholder="MM" min="1" value="${ev?ev[mKey]||'':''}">
+    <span class="date-sep">/</span>
+    <input id="${prefix}-y" class="date-inp date-inp-y" type="number" placeholder="YYYY" value="${ev?ev[yKey]||'':''}">
+    <input id="${prefix}-h" class="date-inp" type="number" placeholder="HH" min="0" max="23" value="${ev?ev[hKey]||0:0}">
+    <span class="date-sep">:</span>
+    <input id="${prefix}-min" class="date-inp" type="number" placeholder="MM" min="0" max="59" value="${ev?ev[minKey]||0:0}">
+  </div>`;
 }
 
 async function openEventModal(tlid,evId=null){
@@ -3051,7 +3220,8 @@ async function selectSearchHashtag(tid){
 }
 
 Object.assign(window, {
-  setUiSetting, setUiSizeFromSlider, toggleSettingsMenu, startRelListResize,
+  selectModule, returnToNexus,
+  setUiSetting, setUiSizeFromSlider, updateUiSizeLabel, toggleSettingsMenu, startRelListResize,
   openTemplateModal, addTemplate, delTemplate,
   switchRelViewMode, updateRelCategoryView, updateRelObjectView,
   openRelModal, createRelOBOB, createRelOBTL, createRelTLTL,
@@ -3061,10 +3231,9 @@ Object.assign(window, {
   openMapModal, createMap, saveMap, delMap,
   selectMap, selectMapArea, setMapTool,
   openMapAreaModal, createMapArea, saveMapArea, delMapArea,
-  // Object modal functions (exported so inline onclick handlers can call them)
   openObjectModal, createObject, saveObject, delObject,
-  // Object selection
   selectObject,
+  autoExpand, selectProjectHashtag, renderProjectHashtagView,
 });
 
 // ═══ START ═════════════════════════════════════════════
