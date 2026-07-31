@@ -3,6 +3,7 @@
   "version": "2.7.3",
   "description": "Novel data management app",
   "main": "main.js",
+  "license": "MIT",
   "scripts": {
     "start": "node ./start.js",
     "postinstall": "node ./ensure-electron.js",
